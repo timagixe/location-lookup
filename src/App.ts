@@ -20,6 +20,9 @@ function addressLookUpHandler(event: Event) {
         data: { status, results },
       } = response as GoogleGeocodingResponse;
       if (status !== 'OK') {
+        if (status === 'ZERO_RESULTS') {
+          throw new Error('Location is not found');
+        }
         throw new Error('Could not fetch data from API');
       }
       if (results) {
